@@ -1,5 +1,6 @@
 {
   "name": "dragon",
+  "homepage" : "http://Jewdeer21.github.io/dragon",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

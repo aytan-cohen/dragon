@@ -1,39 +1,34 @@
 import React, { Component } from 'react';
 import './App.css';
+import CompleteList from './CompleteList';
+import TaskForm from './TaskForm';
 
 class App extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      item: "",
       items: [
         { id: 1, text: "Learn React", completed: false },
-        { id: 2, text: "Build a todo app", completed: false },
+        { id: 2, text: "Build a todo app", completed: true },
         { id: 3, text: "Profit", completed: false }
       ]
     }
   }
 
-  addToList = (e) => {
-    e.preventDefault();
-    if(this.state.item.length < 1) 
-      return
-    let index = {name: this.state.item, completed: false};
+  addToList = (itemName) => {
+    let index = {text: itemName, completed: false};
     this.setState({
         items: [...this.state.items, index],
         item: ""
     });
   }
 
-  itemUpdate = (e) => {
-    this.setState({item: e.target.value});
-  }
-
-  gotIt = (i) => {
-    let items = [...this.state.items];
-    items[i].completed = !items[i].completed;
-    this.setState([items, i]);
+  complete = (i) => {
+    // alert("this is coming from App component", i);
+    let g = [...this.state.items];
+    g[i].completed = !g[i].completed;
+    this.setState({completed: g});
   }
 
   render(){
@@ -43,52 +38,14 @@ class App extends Component {
         <h1>Dojo To Do List</h1>
         </div>
         <br /><hr /><br />
-        <form onSubmit={this.addToList}>
-          <div className="form-group">
-            <label>To Do List:
-            <input 
-              className="form-control" 
-              type="text" 
-              name="item"
-              value={this.state.item}
-              onChange={this.itemUpdate}
-              />
-            </label>
-          </div>
-          <input type="submit" className="btn btn-primary" />
-        </form>
+        <TaskForm 
+          addToList={this.addToList}
+        />
         <br /><hr /><br />
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>Completed?</th>
-              <th>Item</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              this.state.items.map( (item, i) =>
-              <tr key={i}>
-                <td onClick={this.gotIt.bind(this, i)}>
-                {
-                  item.completed ?
-                  <>
-                  <input type="checkbox" defaultChecked /> &nbsp;
-                  <span className="badge badge-success">Finished!</span> 
-                  </>:
-                  <>
-                  <input type="checkbox" /> &nbsp;
-                  <span className="badge badge-danger">Completed???</span>
-                  </>
-                }
-                </td>
-                <td>{item.text}</td>
-              </tr>
-              )
-            }
-          </tbody>
-
-        </table>
+        <CompleteList 
+          items={this.state.items} 
+          taskComplete={this.complete}
+          />
       </div>
     );
   }

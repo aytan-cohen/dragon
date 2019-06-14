@@ -19,13 +19,11 @@ class App extends Component {
     e.preventDefault();
     if(this.state.item.length < 1) 
       return
-    let job = {name: this.state.item, completed: false};
+    let index = {name: this.state.item, completed: false};
     this.setState({
-        items: [...this.state.items, job],
+        items: [...this.state.items, index],
         item: ""
-    }, () => {
-      console.log(this.state.items);
-    })   
+    });
   }
 
   itemUpdate = (e) => {
@@ -33,7 +31,6 @@ class App extends Component {
   }
 
   gotIt = (i) => {
-    console.log(i);
     let items = [...this.state.items];
     items[i].completed = !items[i].completed;
     this.setState([items, i]);

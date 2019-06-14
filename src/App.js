@@ -19,8 +19,9 @@ class App extends Component {
     e.preventDefault();
     if(this.state.item.length < 1) 
       return
+    let i = {name: this.state.item, completed: false};
     this.setState({
-        items: [...this.state.items, this.state.item],
+        items: [...this.state.items, i],
         item: ""
     }, () => {
       console.log(this.state.items);
